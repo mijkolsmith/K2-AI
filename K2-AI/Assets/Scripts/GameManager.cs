@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 	Dictionary<int, Boid> boids;
 	public GameObject boidPrefab;
 	public int boidCount = 20;
+	public float minDistance = 10f;
+	public float influenceRange = 10f;
 	
     void Start()
     {
@@ -36,7 +38,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-    void Update()
+    void FixedUpdate()
     {
 		Vector3 a = new Vector3(0, 0, 0);
 		Vector3 b = new Vector3(0, 0, 0);
@@ -53,14 +55,24 @@ public class GameManager : MonoBehaviour
 			{
 				if (boids[i] != boids[j])
 				{
-					if (Mathf.Abs(boids[i].GetPosition().x + boids[j].GetPosition().x) < 10 || Mathf.Abs(boids[i].GetPosition().y + boids[j].GetPosition().y) < 10 || Mathf.Abs(boids[i].GetPosition().z + boids[j].GetPosition().z) < 10)
+					//Vector3.Distance(boids[i].GetPosition(), boids[j].GetPosition())
+					if ((boids[i].GetPosition().x - boids[j].GetPosition().x) * (boids[i].GetPosition().x - boids[j].GetPosition().x) + (boids[i].GetPosition().y - boids[j].GetPosition().y) * (boids[i].GetPosition().y - boids[j].GetPosition().y) + (boids[i].GetPosition().z - boids[j].GetPosition().z) * (boids[i].GetPosition().z - boids[j].GetPosition().z) < minDistance * minDistance)
 					{
-						b = b - (boids[i].GetPosition() + boids[j].GetPosition());
+						b -= boids[j].GetPosition() - boids[i].GetPosition();
+					}
+					if ((boids[i].GetPosition().x - boids[j].GetPosition().x) * (boids[i].GetPosition().x - boids[j].GetPosition().x) + (boids[i].GetPosition().y - boids[j].GetPosition().y) * (boids[i].GetPosition().y - boids[j].GetPosition().y) + (boids[i].GetPosition().z - boids[j].GetPosition().z) * (boids[i].GetPosition().z - boids[j].GetPosition().z) < influenceRange * influenceRange)
+					{
+						c += boids[j].GetVelocity();
 					}
 				}
 			}
 
-			boids[i].UpdateBoid(a, b, c);
+			boids[i].SaveBoid(a, b, c);
+		}
+
+		for (int i = 0; i < boidCount; i++)
+		{
+			boids[i].UpdateBoid();
 		}
 	}
 }

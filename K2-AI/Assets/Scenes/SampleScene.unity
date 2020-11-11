@@ -404,3 +404,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boidPrefab: {fileID: 3992328872725157537, guid: 4d4b2382828e3ba498f6cc4d154271a8,
     type: 3}
+  boidCount: 200
+  minDistance: 10
+  influenceRange: 10
