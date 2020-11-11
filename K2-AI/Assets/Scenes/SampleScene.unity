@@ -404,6 +404,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boidPrefab: {fileID: 3992328872725157537, guid: 4d4b2382828e3ba498f6cc4d154271a8,
     type: 3}
-  boidCount: 200
+  boidCount: 100
   minDistance: 10
   influenceRange: 10
+  cameraObject: {fileID: 963194225}
+  selectedMaterial: {fileID: 2100000, guid: 8d8955fbe1bd0aa42b98a83048327817, type: 2}
+  deselectedMaterial: {fileID: 2100000, guid: f78eac3eac221164a98434d7a3989b6a, type: 2}
+  cameraBoid: 0
