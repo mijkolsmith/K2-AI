@@ -1,5 +1,5 @@
 sceneSetups:
-- path: C:/Users/Michael/Documents/MathGame/Assets/scene.unity
+- path: Assets/Scenes/AStar.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
