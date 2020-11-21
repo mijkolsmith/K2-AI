@@ -164,10 +164,10 @@ public class Astar
 			nodesOpen.Remove(currentNode);
 
 			//Find 4x node (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1) and check for walls
-			var neighbours = nodesOpen.Where(n => (n.position.x == currentNode.position.x - 1 && n.position.y == currentNode.position.y && !n.cell.HasWall(Wall.RIGHT)) ||
-													(n.position.x == currentNode.position.x + 1 && n.position.y == currentNode.position.y && !n.cell.HasWall(Wall.LEFT)) ||
-													(n.position.x == currentNode.position.x && n.position.y == currentNode.position.y - 1 && !n.cell.HasWall(Wall.UP)) ||
-													(n.position.x == currentNode.position.x && n.position.y == currentNode.position.y + 1 && !n.cell.HasWall(Wall.DOWN)));
+			var neighbours = nodesOpen.Where(n => (n.position.x == currentNode.position.x - 1 && n.position.y == currentNode.position.y && !currentNode.cell.HasWall(Wall.LEFT)) ||
+													(n.position.x == currentNode.position.x + 1 && n.position.y == currentNode.position.y && !currentNode.cell.HasWall(Wall.RIGHT)) ||
+													(n.position.x == currentNode.position.x && n.position.y == currentNode.position.y - 1 && !currentNode.cell.HasWall(Wall.DOWN)) ||
+													(n.position.x == currentNode.position.x && n.position.y == currentNode.position.y + 1 && !currentNode.cell.HasWall(Wall.UP)));
 
 			//update the GScore of neighbours
 			foreach (Node node in neighbours)
