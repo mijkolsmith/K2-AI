@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System;
+using UnityEngine;
 
 public class Astar
 {
@@ -16,6 +14,7 @@ public class Astar
 	/// <param name="grid"></param>
 	/// <returns></returns>
 	List<Node> nodesOpen;
+	Dictionary<Vector2Int, Node> nodeDictionary;
 	List<Vector2Int> positions;
 
 	public List<Vector2Int> FindPathToTarget(Vector2Int startPos, Vector2Int endPos, Cell[,] grid)
@@ -108,42 +107,23 @@ public class Astar
 		//initialize an open list and the list to return
 		nodesOpen = new List<Node>();
 		positions = new List<Vector2Int>();
-
-		//add all the nodes to an open list
-		for (int i = 0; i < grid.GetLength(0); i++)
-		{
-			for (int j = 0; j < grid.GetLength(1); j++)
-			{
-				nodesOpen.Add(new Node(grid[i, j].gridPosition, 
-					null, 
-					int.MaxValue, 
-					//alternatively: (int)Vector2Int.Distance(grid[i, j].gridPosition, endPos)   -   manhattan distance:
-					grid[i,j].gridPosition.x - endPos.x + grid[i, j].gridPosition.y - endPos.y,
-					grid[i, j]));
-			}
-		}
+		nodeDictionary = new Dictionary<Vector2Int, Node>();
 
 		//set the GScore of the start node to 0
-		foreach (Node node in nodesOpen)
-		{
-			if (node.position == startPos)
-			{
-				node.GScore = 0;
-			}
-		}
+		nodesOpen.Add(new Node(startPos,
+					null,
+					int.MaxValue,
+					//alternatively: (int)Vector2Int.Distance(grid[i, j].gridPosition, endPos)   -   manhattan distance:
+					startPos.x - endPos.x + startPos.y - endPos.y,
+					grid[startPos.x, startPos.y]));
+		nodesOpen[0].GScore = 0;
+		nodeDictionary.Add(startPos, nodesOpen[0]);
 
 		while (nodesOpen.Count != 0)
 		{//loop until all the nodes have been gone over by the algorithm
 			Node currentNode = null;
-			for (int i = 0; i < nodesOpen.Count; i++)
-			{//make the currentNode the node with the lowest FScore
-				int lowestScore = int.MaxValue;
-				if (nodesOpen[i].FScore < lowestScore)
-				{
-					lowestScore = (int)nodesOpen[i].FScore;
-					currentNode = nodesOpen[i];
-				}
-			}
+			//make the currentNode the node with the lowest FScore
+			currentNode = nodesOpen.Aggregate((curMin, x) => (curMin == null) || (curMin != null || (x.FScore < curMin.FScore)) ? x : curMin);
 
 			if (currentNode.position == endPos)
 			{//when the endPos is found
@@ -163,11 +143,12 @@ public class Astar
 			//remove the current node to not check it again
 			nodesOpen.Remove(currentNode);
 
-			//Find 4x node (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1) and check for walls
-			var neighbours = nodesOpen.Where(n => (n.position.x == currentNode.position.x - 1 && n.position.y == currentNode.position.y && !currentNode.cell.HasWall(Wall.LEFT)) ||
-													(n.position.x == currentNode.position.x + 1 && n.position.y == currentNode.position.y && !currentNode.cell.HasWall(Wall.RIGHT)) ||
-													(n.position.x == currentNode.position.x && n.position.y == currentNode.position.y - 1 && !currentNode.cell.HasWall(Wall.DOWN)) ||
-													(n.position.x == currentNode.position.x && n.position.y == currentNode.position.y + 1 && !currentNode.cell.HasWall(Wall.UP)));
+			//add 4x node (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1) and check for walls
+			List<Node> neighbours = new List<Node>();
+			if (!currentNode.cell.HasWall(Wall.LEFT)) neighbours.Add(GetNodeFromCell(grid[currentNode.position.x - 1, currentNode.position.y], endPos));
+			if (!currentNode.cell.HasWall(Wall.RIGHT)) neighbours.Add(GetNodeFromCell(grid[currentNode.position.x + 1, currentNode.position.y], endPos));
+			if (!currentNode.cell.HasWall(Wall.DOWN)) neighbours.Add(GetNodeFromCell(grid[currentNode.position.x, currentNode.position.y - 1], endPos));
+			if (!currentNode.cell.HasWall(Wall.UP)) neighbours.Add(GetNodeFromCell(grid[currentNode.position.x, currentNode.position.y + 1], endPos));
 
 			//update the GScore of neighbours
 			foreach (Node node in neighbours)
@@ -177,11 +158,31 @@ public class Astar
 				{//the new path is shorter, update the GScore and the parent (for pathing)
 					node.GScore = tempGScore;
 					node.parent = currentNode;
+					nodesOpen.Add(node);
 				}
 			}
 		}
-
+		
 		return positions;
+	}
+
+	private Node GetNodeFromCell(Cell cell, Vector2Int endPos)
+	{
+		Vector2Int pos = cell.gridPosition;
+		if (nodeDictionary.ContainsKey(pos))
+		{
+			return nodeDictionary[pos];
+		}
+		else
+		{
+			Node n = new Node(pos,
+				null,
+				int.MaxValue,
+				pos.x - endPos.x + pos.y - endPos.y,
+				cell);
+			nodeDictionary.Add(pos, n);
+			return n;
+		}
 	}
 
 	/// <summary>
