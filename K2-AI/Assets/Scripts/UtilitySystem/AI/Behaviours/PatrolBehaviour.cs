@@ -11,7 +11,7 @@ public class PatrolBehaviour : AIBehaviour
 	{
 		Debug.Log("Enter Patrol Behaviour");
 		//sort the list by closest place first
-		positions = positions.OrderBy(position => Vector3.Distance(transform.localPosition, position)).ToList();
+		positions = positions.OrderBy(position => Vector3.Distance(transform.position, position)).ToList();
 	}
 
 	public override void Execute()
@@ -20,7 +20,7 @@ public class PatrolBehaviour : AIBehaviour
 		
 		if (transform.position != positions[0])
 		{//walk to the first place
-			transform.position = Vector3.MoveTowards(positions[0], transform.localPosition, Time.deltaTime);
+			transform.position = Vector3.MoveTowards(transform.position, positions[0], Time.deltaTime);
 		}
 		else
 		{//when there, put the first place last and go to the next place

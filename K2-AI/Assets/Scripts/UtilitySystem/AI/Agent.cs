@@ -10,6 +10,7 @@ public class Agent : MonoBehaviour, IDamageable
 	private FloatValue distance;
 	protected FloatValue Health { private get => health; set => this.health = value; }
 	protected FloatValue Distance { private get => distance; set => this.distance = value; }
+	float timer = 1f;
 
 	// Start is called before the first frame update
 	private void Start()
@@ -29,12 +30,18 @@ public class Agent : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         AISelector.OnUpdate();
-        
-        distance.Value = transform.position.magnitude;
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			TakeDamage(10);
+		}
+
+		timer -= Time.deltaTime;
+
+		if (timer <= 0)
+		{
+			AISelector.EvaluateBehaviours();
+			timer = 1f;
 		}
 	}
 

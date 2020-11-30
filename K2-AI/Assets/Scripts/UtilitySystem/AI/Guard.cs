@@ -6,10 +6,12 @@ public class Guard : Agent
 {
 	[SerializeField] FloatValue GuardDistance;
 	[SerializeField] FloatValue GuardHealth;
-	[SerializeField] GameObject player;
+	[SerializeField] public GameObject player;
 
 	public override void OnInitialize()
 	{
+		GuardDistance = ScriptableObject.CreateInstance<FloatValue>();
+		GuardHealth = ScriptableObject.CreateInstance<FloatValue>();
 		base.OnInitialize();
 	}
 
@@ -17,7 +19,7 @@ public class Guard : Agent
 	protected override void Update()
 	{
 		GuardDistance.Value = Vector3.Distance(transform.localPosition, player.transform.localPosition);
-		Distance = BlackBoard.GetFloatVariableValue(VariableType.GuardDistance);
+		//Distance = BlackBoard.GetFloatVariableValue(VariableType.GuardDistance);
 		base.Update();
 	}
 

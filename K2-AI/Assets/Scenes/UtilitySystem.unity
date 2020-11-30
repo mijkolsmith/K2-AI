@@ -538,7 +538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043c0b45b5268394b9a62ad51cadf4f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  utilities: []
+  utilities:
+  - {fileID: 11400000, guid: adfaa8a3cf2e4f545b1b02ee16580652, type: 2}
 --- !u!114 &880555982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,7 +552,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064dc5955f6d2bb4883430408db5456f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  utilities: []
+  utilities:
+  - {fileID: 11400000, guid: 0007366e9908cee45a38c3005a019ead, type: 2}
 --- !u!114 &880555983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,7 +566,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301d21a272788cd468bc0eaf66f77a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  utilities: []
+  utilities:
+  - {fileID: 11400000, guid: ee9b9791685d193458a3cb11a0680548, type: 2}
 --- !u!114 &880555984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,8 +581,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floatVariables:
-  - {fileID: 11400000, guid: db6f291afbc2975449b5f2c0c0fbbff4, type: 2}
   - {fileID: 11400000, guid: 6c6216828de83c541833a6ff0c69c03e, type: 2}
+  - {fileID: 11400000, guid: 2446b50377523404fa1790574770fce2, type: 2}
 --- !u!114 &880555985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,7 +608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NinjaDistance: {fileID: 11400000, guid: 6c6216828de83c541833a6ff0c69c03e, type: 2}
-  NinjaHealth: {fileID: 11400000, guid: db6f291afbc2975449b5f2c0c0fbbff4, type: 2}
+  GuardDistance: {fileID: 11400000, guid: 2446b50377523404fa1790574770fce2, type: 2}
   player: {fileID: 1177446916}
 --- !u!4 &880555987
 Transform:
@@ -647,7 +650,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177446916}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -656,7 +659,7 @@ Transform:
   - {fileID: 1555151115}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!143 &1177446918
 CharacterController:
   m_ObjectHideFlags: 0
@@ -727,7 +730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0988c2e6108ef4bba417739a1c7fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 2
+  sensitivity: 1
   smoothing: 5
 --- !u!20 &1226152564
 Camera:
@@ -1065,6 +1068,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1555151114}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1781543213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2cbabe83821774f8c6652d6416c03a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoReset: 1
+  Type: 0
+  value: 0
+  minValue: 0
+  maxValue: 0
 --- !u!1 &1996893067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1579,7 +1599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2057e0596bd394c8043d135a7cc853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GuardDistance: {fileID: 11400000, guid: 2446b50377523404fa1790574770fce2, type: 2}
+  GuardDistance: {fileID: 1781543213}
   GuardHealth: {fileID: 11400000, guid: f57690ca38346d145abfd56093c93190, type: 2}
   player: {fileID: 1177446916}
 --- !u!114 &8990955008966499934

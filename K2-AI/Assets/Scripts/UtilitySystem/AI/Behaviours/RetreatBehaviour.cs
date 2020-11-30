@@ -10,6 +10,6 @@ public class RetreatBehaviour : AIBehaviour
 	}
 	public override void Execute()
 	{
-		Debug.Log("Execute Retreat behaviour");
+		Debug.Log("execute Retreat behaviour");
 	}
 }
