@@ -11,7 +11,7 @@ public class MyCharacterController : MonoBehaviour
 	[SerializeField] float gravity = -20f;
 
 	[SerializeField] Transform groundCheck;
-	[SerializeField] float groundDistance = .4f;
+	[SerializeField] float groundDistance = .5f;
 	[SerializeField] LayerMask groundMask;
     private bool isGrounded;
 

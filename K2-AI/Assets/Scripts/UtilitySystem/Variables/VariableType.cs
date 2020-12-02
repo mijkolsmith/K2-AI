@@ -1,7 +1,9 @@
 ﻿public enum VariableType
 {
-    GuardHealth = 0,
-    GuardDistance = 1,
-	NinjaHealth = 2,
-	NinjaDistance = 3
+	GuardDistance = 0,
+	GuardHealth = 1,
+    GuardRaycast = 2,
+	GuardWeapon = 3,
+	NinjaDistance = 4,
+	NinjaHidden = 5
 }

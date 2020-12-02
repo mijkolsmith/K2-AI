@@ -8,7 +8,6 @@ public class FloatEvaluator : UtilityEvaluator
     public override void OnInitialize(BlackBoard bb)
     {
         floatValue = bb.GetFloatVariableValue(VariableType);
-
 		/*if (bb.gameObject.name == "NinjaAI")
 		{
 			for (float f = 0; f < 1; f += 0.01f)
@@ -18,7 +17,7 @@ public class FloatEvaluator : UtilityEvaluator
 		}*/
 	}
 
-    public override float GetMaxValue()
+	public override float GetMaxValue()
     {
         return floatValue.MaxValue;
     }
@@ -27,4 +26,9 @@ public class FloatEvaluator : UtilityEvaluator
     {
         return floatValue.Value;
     }
+
+	public override void OnReset()
+	{
+		//nothing
+	}
 }

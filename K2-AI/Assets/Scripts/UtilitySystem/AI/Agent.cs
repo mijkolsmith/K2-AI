@@ -43,6 +43,11 @@ public class Agent : MonoBehaviour, IDamageable
 			AISelector.EvaluateBehaviours();
 			timer = 1f;
 		}
+
+		if (transform.position.y > 1.5f || transform.position.y < 1.5f)
+		{
+			transform.position = new Vector3(transform.position.x, 1.5f, transform.position.z);
+		}
 	}
 
     public virtual void TakeDamage(float damage)
@@ -51,8 +56,6 @@ public class Agent : MonoBehaviour, IDamageable
         {
             health.Value -= damage;
         }
-
-        AISelector.EvaluateBehaviours();
     }
 }
 
