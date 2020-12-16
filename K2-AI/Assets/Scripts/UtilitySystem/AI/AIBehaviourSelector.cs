@@ -4,6 +4,7 @@ public class AIBehaviourSelector : MonoBehaviour
 {
     private AIBehaviour[] behaviours;
     private AIBehaviour currentBehaviour;
+	[SerializeField] TextMesh behaviourText;
 
     public void OnInitialize(BlackBoard bb)
     {
@@ -17,18 +18,17 @@ public class AIBehaviourSelector : MonoBehaviour
     public void EvaluateBehaviours()
     {
         var newBehaviour = behaviours.ToList().OrderByDescending(x => x.GetNormalizedScore()).First();
-        if(newBehaviour != currentBehaviour)
+        if (newBehaviour != currentBehaviour)
         {
             currentBehaviour?.OnExit();
             currentBehaviour = newBehaviour;
             currentBehaviour?.OnEnter();
+			behaviourText.text = currentBehaviour.ToString();
         }
-
     }
 
     public void OnUpdate()
     {
         currentBehaviour?.Execute();
     }
-
 }

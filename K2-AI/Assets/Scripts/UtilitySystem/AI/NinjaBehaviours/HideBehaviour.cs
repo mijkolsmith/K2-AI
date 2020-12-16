@@ -63,7 +63,6 @@ public class HideBehaviour : AIBehaviour
 
 		if (!cornerReached && Vector3.Distance(transform.position, cornerPositions[0]) > 1f)
 		{
-			Debug.Log(cornerPositions[0]);
 			transform.position = Vector3.MoveTowards(transform.position, cornerPositions[0], Time.deltaTime * moveSpeed);
 			if (Vector3.Distance(transform.position, cornerPositions[0]) <= 1f)
 			{

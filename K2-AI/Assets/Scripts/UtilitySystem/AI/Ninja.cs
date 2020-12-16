@@ -13,7 +13,8 @@ public class Ninja : Agent
 	[SerializeField] public GameObject guard;
 	[SerializeField] public LayerMask guardMask;
 	public bool isHidden = false;
-	public bool throwing = false;
+	public bool smokeThrown = false;
+	public float smokeTimer = 0;
 
 	public override void OnInitialize()
 	{
@@ -23,6 +24,17 @@ public class Ninja : Agent
 	// Update is called once per frame
 	protected override void Update()
 	{
+		if (smokeThrown == true)
+		{
+			smokeTimer += Time.deltaTime;
+
+			if (smokeTimer >= 5)
+			{
+				smokeThrown = false;
+				smokeTimer = 0;
+			}
+		}
+
 		RaycastHit hit;
 		if (guard != null)
 		{
