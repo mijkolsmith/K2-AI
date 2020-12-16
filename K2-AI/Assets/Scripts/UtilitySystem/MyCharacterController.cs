@@ -11,7 +11,7 @@ public class MyCharacterController : MonoBehaviour
 	[SerializeField] float gravity = -20f;
 
 	[SerializeField] Transform groundCheck;
-	[SerializeField] float groundDistance = .5f;
+	[SerializeField] float groundDistance = 0.1f;
 	[SerializeField] LayerMask groundMask;
     private bool isGrounded;
 
@@ -44,7 +44,7 @@ public class MyCharacterController : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        if (Input.GetButton("Fire2") == false)
+        if (!Input.GetButton("Fire2"))
         {
             //movement
             move = transform.right * x + transform.forward * z;
@@ -54,16 +54,15 @@ public class MyCharacterController : MonoBehaviour
             //gravity
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
-                velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravity);
+				velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravity);
             }
 
             velocity.y += gravity * Time.deltaTime;
 
             player.Move(velocity * Time.deltaTime);
         }
-        else if (Input.GetButton("Fire2") == true && isGrounded)
+        else if (Input.GetButton("Fire2") && isGrounded)
         {
-            Debug.Log("Crouching");
             //movement
             move = transform.right * x + transform.forward * z;
 

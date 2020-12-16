@@ -31,11 +31,6 @@ public class Agent : MonoBehaviour, IDamageable
     {
         AISelector.OnUpdate();
 
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			TakeDamage(10);
-		}
-
 		timer -= Time.deltaTime;
 
 		if (timer <= 0)
@@ -55,6 +50,10 @@ public class Agent : MonoBehaviour, IDamageable
         if (health)
         {
             health.Value -= damage;
+			if (health.Value == 0)
+			{
+				Destroy(gameObject);
+			}
         }
     }
 }

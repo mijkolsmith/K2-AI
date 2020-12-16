@@ -6,10 +6,11 @@ public class IdleBehaviour : AIBehaviour
 {
 	public override void OnEnter()
 	{
-		Debug.Log("Enter Hide Behaviour");
+		Debug.Log("Enter Idle Behaviour");
 	}
 	public override void Execute()
 	{
-		Debug.Log("Execute Hide Behaviour");
+		Debug.Log("Execute Idle Behaviour");
+		//idling
 	}
 }

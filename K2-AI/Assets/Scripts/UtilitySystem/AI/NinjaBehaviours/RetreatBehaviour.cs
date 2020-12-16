@@ -10,6 +10,7 @@ public class RetreatBehaviour : AIBehaviour
 	public override void OnEnter()
 	{
 		Debug.Log("Enter Retreat Behaviour");
+		player = GetComponent<Guard>().player;
 	}
 
 	public override void Execute()

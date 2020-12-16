@@ -6,11 +6,14 @@ using System;
 public class Ninja : Agent
 {
 	[SerializeField] FloatValue NinjaDistance;
-	[SerializeField] FloatValue GuardDistance;
 	[SerializeField] FloatValue NinjaHidden;
+	[SerializeField] FloatValue GuardDistance;
+	[SerializeField] FloatValue GuardRaycast;
 	[SerializeField] public GameObject player;
 	[SerializeField] public GameObject guard;
+	[SerializeField] public LayerMask guardMask;
 	public bool isHidden = false;
+	public bool throwing = false;
 
 	public override void OnInitialize()
 	{
@@ -21,14 +24,19 @@ public class Ninja : Agent
 	protected override void Update()
 	{
 		RaycastHit hit;
-		if (Physics.Raycast(transform.position, guard.transform.position - transform.position, out hit))
+		if (guard != null)
 		{
-			if (hit.transform.gameObject == guard)
+			Debug.DrawRay(transform.position, guard.transform.position - transform.position, Color.green);
+			if (Physics.Raycast(transform.position, guard.transform.position - transform.position, out hit, 50, guardMask))
 			{
-				isHidden = false;
+				if (hit.transform == guard.transform)
+				{
+					isHidden = false;
+				}
+				else isHidden = true;
 			}
-			else isHidden = true;
 		}
+		else isHidden = true;
 
 		NinjaDistance.Value = Vector3.Distance(transform.localPosition, player.transform.localPosition);
 		NinjaHidden.Value = Convert.ToSingle(isHidden);

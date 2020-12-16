@@ -8,10 +8,13 @@ public class Guard : Agent
 	[SerializeField] FloatValue GuardDistance;
 	[SerializeField] FloatValue GuardHealth;
 	[SerializeField] FloatValue GuardWeapon;
+	[SerializeField] FloatValue GuardRaycast;
 	[SerializeField] public GameObject player;
 	[SerializeField] public GameObject weapon;
+	[SerializeField] public LayerMask playerMask;
 	public bool hasWeapon = false;
 	public bool canSeePlayer = false;
+	public bool isAttacking = false;
 
 	public override void OnInitialize()
 	{
@@ -21,20 +24,23 @@ public class Guard : Agent
 	// Update is called once per frame
 	protected override void Update()
 	{
-		/*RaycastHit hit;
-		Debug.DrawRay(transform.position, new Vector3(player.transform.position.x - transform.position.x, transform.position.y, player.transform.position.z - transform.position.z), Color.red);
-		if (Physics.Raycast(transform.position, new Vector3(player.transform.position.x - transform.position.x, transform.position.y, player.transform.position.z - transform.position.z), out hit))
+		RaycastHit hit;
+		Debug.DrawRay(transform.position, new Vector3(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y, player.transform.position.z - transform.position.z), Color.red);
+		if (Physics.Raycast(transform.position, new Vector3(player.transform.position.x - transform.position.x, transform.position.y, player.transform.position.z - transform.position.z), out hit, 50, playerMask))
 		{
-			if (hit.transform.gameObject == player)
-			{
-				canSeePlayer = true;
-			}
-			else canSeePlayer = false;
-		}*/
+			canSeePlayer = false;
+		}
+		else canSeePlayer = true;
 
-		Debug.Log(canSeePlayer);
+		if (Input.GetButtonDown("Fire1") && canSeePlayer == true)
+		{
+			Debug.Log("oof!");
+			TakeDamage(10);
+		}
+
 		GuardDistance.Value = Vector3.Distance(transform.localPosition, player.transform.localPosition);
 		GuardWeapon.Value = Convert.ToSingle(hasWeapon);
+		GuardRaycast.Value = Convert.ToSingle(canSeePlayer);
 
 		base.Update();
 	}
